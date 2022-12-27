@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2022 at 03:43 PM
+-- Generation Time: Dec 27, 2022 at 04:03 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -56,8 +56,18 @@ INSERT INTO `detail_karyawan` (`id_anggota`, `domisili`, `email`, `facebook`, `i
 CREATE TABLE `detail_penjualan` (
   `id_transaksi` int(11) NOT NULL,
   `No_reg` varchar(11) NOT NULL,
-  `total` int(11) NOT NULL
+  `total(Rp)` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_penjualan`
+--
+
+INSERT INTO `detail_penjualan` (`id_transaksi`, `No_reg`, `total(Rp)`) VALUES
+(1, 'REG-004', 15000),
+(2, 'REG-002', 26000),
+(3, 'REG-007', 70500),
+(4, 'REG-003', 32000);
 
 -- --------------------------------------------------------
 
@@ -99,22 +109,23 @@ CREATE TABLE `obat` (
   `Tahun_Produksi` int(11) NOT NULL,
   `kadaluarsa` int(11) NOT NULL,
   `id_manufaktur` varchar(11) NOT NULL,
-  `harga(Rp)` int(11) NOT NULL
+  `harga(Rp)` int(11) NOT NULL,
+  `qty_stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `obat`
 --
 
-INSERT INTO `obat` (`No_Reg`, `merek/brand`, `indikasi`, `komposisi`, `Tahun_Produksi`, `kadaluarsa`, `id_manufaktur`, `harga(Rp)`) VALUES
-('REG-001', 'Paracetamol', 'Meredakan gejala demam dan nyeri', 'Paracetamol 500 mg', 2021, 2025, 'PM-5', 10000),
-('REG-002', 'FATIGON SPIRIT', 'Memulihkan tenaga,dan membantu memlihara daya tahan tubuh', 'Multivitamin, dan Nano ginseng', 2021, 2025, 'PM-2', 13000),
-('REG-003', 'Amobiotic', 'Meredakan nyeri dan infeksi bakteri', 'Amoxicillin', 2022, 2026, 'PM-1', 8000),
-('REG-004', 'Antalgin', 'Meredakan rasa nyeri dan demam', 'Metamizole anelgesik', 2021, 2025, 'PM-8', 15000),
-('REG-005', 'Fituno', 'Membantu memulihkan daya tahan tubuh', 'Ekstrak Echinecea,dan Multivitamin', 2022, 2026, 'PM-6', 85000),
-('REG-006', 'Ibuprofen', 'Meredakan nyeri, radang sendi dan demam', 'ibuprofen 400 mg', 2020, 2025, 'PM-4', 12000),
-('REG-007', 'Sangobion', 'Vitamin dan Suplemen penambah darah', 'Ferrous Cluconace, vit C. Vit B, etc', 2021, 2026, 'PM-3', 23500),
-('REG-008', 'Promedryl Syrup', 'Meredakan batuk, dan demam', 'Paracetamol, Guaifnesin, etc', 2021, 2025, 'PM-7', 26000);
+INSERT INTO `obat` (`No_Reg`, `merek/brand`, `indikasi`, `komposisi`, `Tahun_Produksi`, `kadaluarsa`, `id_manufaktur`, `harga(Rp)`, `qty_stock`) VALUES
+('REG-001', 'Paracetamol', 'Meredakan gejala demam dan nyeri', 'Paracetamol 500 mg', 2021, 2025, 'PM-5', 10000, 5),
+('REG-002', 'FATIGON SPIRIT', 'Memulihkan tenaga,dan membantu memlihara daya tahan tubuh', 'Multivitamin, dan Nano ginseng', 2021, 2025, 'PM-2', 13000, 8),
+('REG-003', 'Amobiotic', 'Meredakan nyeri dan infeksi bakteri', 'Amoxicillin', 2022, 2026, 'PM-1', 8000, 22),
+('REG-004', 'Antalgin', 'Meredakan rasa nyeri dan demam', 'Metamizole anelgesik', 2021, 2025, 'PM-8', 15000, 9),
+('REG-005', 'Fituno', 'Membantu memulihkan daya tahan tubuh', 'Ekstrak Echinecea,dan Multivitamin', 2022, 2026, 'PM-6', 85000, 6),
+('REG-006', 'Ibuprofen', 'Meredakan nyeri, radang sendi dan demam', 'ibuprofen 400 mg', 2020, 2025, 'PM-4', 12000, 9),
+('REG-007', 'Sangobion', 'Vitamin dan Suplemen penambah darah', 'Ferrous Cluconace, vit C. Vit B, etc', 2021, 2026, 'PM-3', 23500, 12),
+('REG-008', 'Promedryl Syrup', 'Meredakan batuk, dan demam', 'Paracetamol, Guaifnesin, etc', 2021, 2025, 'PM-7', 26000, 7);
 
 -- --------------------------------------------------------
 
@@ -125,18 +136,19 @@ INSERT INTO `obat` (`No_Reg`, `merek/brand`, `indikasi`, `komposisi`, `Tahun_Pro
 CREATE TABLE `penjualan` (
   `id_transaksi` int(11) NOT NULL,
   `id_kasir` int(11) NOT NULL,
-  `tanggal_penjualan` datetime NOT NULL
+  `tanggal_penjualan` datetime NOT NULL,
+  `qty` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `penjualan`
 --
 
-INSERT INTO `penjualan` (`id_transaksi`, `id_kasir`, `tanggal_penjualan`) VALUES
-(1, 4, '2022-07-21 16:12:23'),
-(2, 1, '2022-08-10 13:20:25'),
-(3, 3, '2022-08-13 12:14:26'),
-(4, 2, '2022-08-14 09:02:45');
+INSERT INTO `penjualan` (`id_transaksi`, `id_kasir`, `tanggal_penjualan`, `qty`) VALUES
+(1, 4, '2022-07-21 16:12:23', '2 '),
+(2, 1, '2022-08-10 13:20:25', '1'),
+(3, 3, '2022-08-13 12:14:26', '3'),
+(4, 2, '2022-08-14 09:02:45', '4');
 
 -- --------------------------------------------------------
 
@@ -223,7 +235,7 @@ ALTER TABLE `detail_karyawan`
 -- AUTO_INCREMENT for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `karyawan`
@@ -276,6 +288,7 @@ Query Read : SELECT * FROM `obat` ORDER BY No_Reg DESC;
              SELECT * FROM `perusahaan_manufaktur` ORDER BY id_manufaktur
 
 Delete : DELETE FROM `obat` WHERE No_Reg = 'REG_008'
+UPDATE : UPDATE `obat` SET `tahun_produksi`= '2023' WHERE `No_reg` = 'REG-008';
 JOIN :  SELECT tanggal_penjualan, penjualan.id_transaksi, nama, sex
         FROM `penjualan` 
         JOIN karyawan ON karyawan.id_anggota = penjualan.id_kasir
